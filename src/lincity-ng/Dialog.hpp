@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define __DIALOG_HPP__
 
 #include <vector>
+#include "GameView.hpp"
 #include "MapPoint.hpp"
 #include "gui/Component.hpp"
 #include "gui/Desktop.hpp"
@@ -42,9 +43,9 @@ void closeAllDialogs();
 class Dialog
 {
     public:
-        Dialog( int type, std::string message, std::string extraString);
-        Dialog( int type, int x, int y );
-        Dialog( int type );
+        Dialog( int, const std::string&, const std::string& );
+        Dialog( int, int, int );
+        Dialog( int );
         ~Dialog();
         void closeDialog();
 

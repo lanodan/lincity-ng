@@ -121,7 +121,6 @@ void initialize_monthgraph (void){
  *                                GOOD, RESULTS in green
  *                                BAD in red
  *                                default white
- * in NG good_bad is reseted to void !!!
  *
  * fn is the FileName of the message
  *   if good_bad is RESULTS the fn is an absolute filename else
@@ -132,24 +131,23 @@ void initialize_monthgraph (void){
  */
 void ok_dial_box (const char *fn, int good_bad, const char *xs)
 {
-    (void) good_bad;
     try{
         new Dialog( MSG_DIALOG, std::string( fn ), std::string( xs ? xs : "" ) );
     } catch(std::exception& e) {
         std::cerr << "Problem with ok_dial_box: " << e.what() << "\n";
         std::ostringstream text;
         text << "Problem with ok_dial_box: '" << fn << "' + \"" << (xs ? xs : "") << "\"\n";
-        updateMessageText( text.str() );
+        updateMessageText( getGameView(), text.str() );
     }
 }
 
 /*
  * Update Message in Message Window
  */
-void updateMessageText( const std::string text )
+void updateMessageText(GameView* gv, const std::string text)
 {
     //Dialog Test
-    Component* root = getGameView();
+    Component* root = gv;
     if(!root) {
         //happens while in menu.
         std::cerr << "Root not found.\n";
@@ -182,7 +180,7 @@ void updateMessageText( const std::string text )
     }
 }
 
-void updateDate()
+void updateDate(GameView* gv)
 {
     std::ostringstream dateText;
 
@@ -193,7 +191,7 @@ void updateDate()
     dateText << current_month( total_time );
     dateText << " "<< current_year( total_time );
 
-    Component* root = getGameView();
+    Component* root = gv;
     if( !root ) return;
     while( root->getParent() )
         root = root->getParent();
@@ -219,7 +217,7 @@ void string_begadd_number(std::string &str, int number, bool fill) {
   str = result.str() + std::string(" ") + str;
 };
 
-void updateMoney() {
+void updateMoney(GameView* gv) {
     if( lastMoney == total_money ){
         return;
     }
@@ -256,7 +254,7 @@ void updateMoney() {
 
     moneyText << moneystr << postfix << _("$");
 
-    Component* root = getGameView();
+    Component* root = gv;
     if( !root ) return;
     while( root->getParent() )
         root = root->getParent();
@@ -291,9 +289,9 @@ void prog_box (const char *title, int percent)
 #endif
 }
 
-void print_total_money (void)
+void print_total_money (GameView* gv)
 {
-    updateMoney();
+    updateMoney(gv);
 }
 /*
 void refresh_population_text (void)

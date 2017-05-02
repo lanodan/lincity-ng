@@ -58,7 +58,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 SDL_Window* window = NULL;
 SDL_GLContext window_context = NULL;
 SDL_Renderer* window_renderer = NULL;
-Painter* painter = 0;
+
 tinygettext::DictionaryManager* dictionaryManager = 0;
 bool restart = false;
 
@@ -252,7 +252,7 @@ void resizeVideo(int width, int height, bool fullscreen)
     }
 }
 
-void initVideo(int width, int height)
+void initVideo(std::unique_ptr<Painter>& painter, int width, int height)
 {
     Uint32 flags = 0;
 
@@ -313,12 +313,19 @@ void initVideo(int width, int height)
     fontManager = new FontManager();
 }
 
-void mainLoop()
+void mainLoop(std::unique_ptr<Painter>& painter,
+              std::unique_ptr<TextureManager>& texture_manager,
+              std::unique_ptr<FontManager>& fontManager)
 {
     std::unique_ptr<MainMenu> menu;
     std::unique_ptr<Game> game;
     MainState state = MAINMENU;
     MainState nextstate;
+
+    auto video_reset_cb = [&](int x, int y) {
+        initVideo( painter, texture_manager, fontManager, x, y );
+    };
+    auto game_view_accessor = []() -> GameView& { return *getGameView(); };
 
     while(state != QUIT)
     {
@@ -333,7 +340,7 @@ void mainLoop()
                 break;
             case INGAME:
                 {
-                    if(game.get() == 0)
+                    if( !game )
                     {
                         game.reset(new Game(window));
 
@@ -445,6 +452,13 @@ void parseCommandLine(int argc, char** argv)
 int main(int argc, char** argv)
 {
     int result = 0;
+  {
+    std::unique_ptr<Painter>        painter;
+    std::unique_ptr<TextureManager> texture_manager;
+    std::unique_ptr<FontManager>    fontManager;
+    font_accessor = std::function<TTF_Font&(Style)>([&](Style style) -> TTF_Font& {
+        return *(fontManager->getFont(style));
+    });
 
 #ifndef DEBUG //in debug mode we wanna have a backtrace
     try {
@@ -491,13 +505,12 @@ int main(int argc, char** argv)
             msg << "Couldn't initialize SDL_ttf: " << SDL_GetError();
             throw std::runtime_error(msg.str());
         }
-        initVideo(getConfig()->videoX, getConfig()->videoY);
+        initVideo(painter, texture_manager, fontManager, getConfig()->videoX, getConfig()->videoY);
         initLincity();
-        std::unique_ptr<Sound> sound;
-        sound.reset(new Sound());
+        auto sound = std::make_unique<Sound>();
         //set a function to call when music stops
         Mix_HookMusicFinished(musicHalted);
-        mainLoop();
+        mainLoop(painter, texture_manager, fontManager);
         getConfig()->save();
         destroy_game();
 #ifndef DEBUG
@@ -509,13 +522,11 @@ int main(int argc, char** argv)
         result = 1;
     }
 #endif
-    delete painter;
-    delete fontManager;
-    delete texture_manager;
     if(TTF_WasInit())
         TTF_Quit();
     if(SDL_WasInit(0))
         SDL_Quit();
+  }
     xmlCleanupParser();
     delete dictionaryManager;
     dictionaryManager = 0;

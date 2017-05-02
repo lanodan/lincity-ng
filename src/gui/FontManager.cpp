@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "tinygettext/gettext.hpp"
 #include "PhysfsStream/PhysfsSDL.hpp"
 
-FontManager* fontManager = 0;
+std::function<TTF_Font&(Style)> font_accessor;
 
 FontManager::FontManager()
 {

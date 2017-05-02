@@ -55,7 +55,7 @@ void resetLastMessage(){
     last_message_group = 0;
 }
 
-void check_bulldoze_area (int x, int y)
+void check_bulldoze_area ( int x, int y)
 {
     int xx, yy;
     unsigned short g = world(x,y)->getGroup();
@@ -116,11 +116,10 @@ void check_bulldoze_area (int x, int y)
 }
 
 
-void editMap (MapPoint point, int button)
+void editMap( MapPoint point, int button )
 {
-    if( !getGameView()->inCity( point ) ){
-        return;
-    }
+    auto in_city = getGameView()->inCity( point );
+    if( !in_city ) { return; }
 
     int x = point.x;
     int y = point.y;

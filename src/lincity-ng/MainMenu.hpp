@@ -19,7 +19,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define __MAINMENU_HPP__
 
 #include "main.hpp"
+#include "GameView.hpp"
 #include "gui/Paragraph.hpp"
+#include "gui/Painter.hpp"
+#include "gui/TextureManager.hpp"
+#include "gui/FontManager.hpp"
 #include <memory>
 
 #include <map>
@@ -31,11 +35,12 @@ class CheckButton;
 
 class MainMenu
 {
+    using VideoResetCB = std::function<void(int, int)>;
 public:
     MainMenu(SDL_Window* window);
     ~MainMenu();
 
-    MainState run();
+    MainState run(std::function<Painter&()>);
     void gotoMainMenu();
 
 private:
@@ -74,6 +79,7 @@ private:
     void selectLoadSaveGameButtonClicked(CheckButton*,int, bool save );
     void optionsMenuButtonClicked(CheckButton* button, int );
 
+    VideoResetCB video_reset_cb;
     std::unique_ptr<Component> mainMenu;
     std::unique_ptr<Component> newGameMenu;
     std::unique_ptr<Component> loadGameMenu;

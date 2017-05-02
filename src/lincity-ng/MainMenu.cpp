@@ -782,8 +782,8 @@ MainMenu::continueButtonClicked(Button* )
     if (!world.dirty)
     {
         //load current game if it exists
-        if( ! loadCityNG( std::string("9_currentGameNG.scn.gz") )  &&
-            ! loadCityNG( std::string("9_currentGameNG.scn") ) )
+        if( ! loadCityNG( *getGameView(), std::string("9_currentGameNG.scn.gz") )  &&
+            ! loadCityNG( *getGameView(), std::string("9_currentGameNG.scn") ) )
         {
             city_settings  city;
             city.with_village  = true;
@@ -865,7 +865,7 @@ MainMenu::optionsBackButtonClicked(Button* )
  * Either create selected random terrain or load a scenario.
  **/
 void
-MainMenu::newGameStartButtonClicked(Button* )
+MainMenu::newGameStartButtonClicked( Button* )
 {
     if( mFilename.empty() ){
         // std::cout << "nothing selected\n";
@@ -887,12 +887,11 @@ MainMenu::newGameStartButtonClicked(Button* )
 
     try {
         fn_map.at(baseName)(&main_screen_originx, &main_screen_originy, city);
-        GameView* gv = getGameView();
-        if( gv ){ gv->readOrigin(); }
+        if( getGameView() ) { getGameView()->readOrigin(); }
         quitState = INGAME;
         running = false;
     } catch (const std::out_of_range&) {
-        if( loadCityNG( mFilename ) ){
+        if( loadCityNG( *getGameView(), mFilename ) ){
             strcpy (given_scene, baseName.c_str());
             quitState = INGAME;
             running = false;
@@ -929,7 +928,7 @@ void
 MainMenu::loadGameLoadButtonClicked(Button *)
 {
     getSound()->playSound( "Click" );
-    if( loadCityNG( mFilename ) ){
+    if( loadCityNG( *getGameView(), mFilename ) ){
         quitState = INGAME;
         running = false;
     }
@@ -972,14 +971,14 @@ MainMenu::loadGameSaveButtonClicked(Button *)
     newStart << std::setfill('0') << std::setw(5);
     newStart << housed_population + people_pool;
     std::string newFilename( newStart.str() );
-    saveCityNG( newFilename );
+    saveCityNG( *getGameView(), newFilename );
     fillLoadMenu( true );
     gotoMainMenu();
 }
 
 
 MainState
-MainMenu::run()
+MainMenu::run(std::function<Painter&()> get_painter)
 {
     SDL_Event event;
     running = true;

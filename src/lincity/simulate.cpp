@@ -56,7 +56,6 @@
 extern void print_total_money(void);
 void setLincitySpeed( int speed );
 extern void ok_dial_box(const char *, int, const char *);
-extern GameView* GetGameView(void);
 
 /* AL1: they are all in engine.cpp */
 extern void do_daily_ecology(void);
@@ -70,10 +69,10 @@ int flag_warning = false;
  * Private Fn Prototypes
  * ---------------------------------------------------------------------- */
 // static void shuffle_mappoint_array(void);
-static void do_periodic_events(void);
-static void end_of_month_update(void);
+static void do_periodic_events(GameView& gv, std::function<void()>);
+static void end_of_month_update(GameView& gv);
 static void start_of_year_update(void);
-static void end_of_year_update(void);
+static void end_of_year_update(std::function<void()>);
 static void simulate_mappoints(UserDataMap);
 //extern void desert_water_frontier(int originx, int originy, int w, int h);
 
@@ -83,7 +82,7 @@ static int sust_fire_cover(void);
 /* ---------------------------------------------------------------------- *
  * Public Functions
  * ---------------------------------------------------------------------- */
-void do_time_step(UserDataMap simulation_user_data)
+void do_time_step(GameView& gv, UserDataMap simulation_user_data, std::function<void()> print_total_money)
 {
     if (flag_warning) {
         flag_warning = false;
@@ -121,14 +120,14 @@ void do_time_step(UserDataMap simulation_user_data)
     Vehicle::cleanVehicleList();
 
     /* Now do the stuff that happens once a year, once a month, etc. */
-    do_periodic_events();
+    do_periodic_events(gv, print_total_money);
 }
 
 /* ---------------------------------------------------------------------- *
  * Private Functions
  * ---------------------------------------------------------------------- */
 
-static void do_periodic_events(void)
+static void do_periodic_events(GameView& gv, std::function<void()> print_total_money)
 {
     add_daily_to_monthly();
     do_daily_ecology();
@@ -146,18 +145,18 @@ static void do_periodic_events(void)
     if ((total_time % DAYS_BETWEEN_SHANTY) == 15 && tech_level > (GROUP_HEALTH_TECH * MAX_TECH_LEVEL / 1000))
     {   update_shanty();}
     if (total_time % NUMOF_DAYS_IN_MONTH == (NUMOF_DAYS_IN_MONTH - 1))
-    {   end_of_month_update();}
+    {   end_of_month_update(gv);}
     if (total_time % NUMOF_DAYS_IN_YEAR == (NUMOF_DAYS_IN_YEAR - 1))
-    {   end_of_year_update();}
+    {   end_of_year_update(gv);}
 }
 
-static void end_of_month_update(void)
+static void end_of_month_update(GameView& gv)
 {
     //update queque of polluted tiles
     scan_pollution();
     //fetch remaining textures in order loader thread can exit
-    if(getGameView()->textures_ready && getGameView()->remaining_images)
-    {   getGameView()->fetchTextures();}
+    if(gv.textures_ready && gv.remaining_images)
+    {   gv.fetchTextures();}
     housed_population = (tpopulation / NUMOF_DAYS_IN_MONTH);
     total_housing = (thousing / NUMOF_DAYS_IN_MONTH);
     if ((housed_population + people_pool) > max_pop_ever)
@@ -205,7 +204,7 @@ static void start_of_year_update(void)
     unemployed_history -= unemployed_history / 100.0;
 }
 
-static void end_of_year_update(void)
+static void end_of_year_update(GameView& gv)
 {
     income_tax = (income_tax * income_tax_rate) / 100;
     ly_income_tax = income_tax;

@@ -10,8 +10,9 @@
 #include <typeindex>
 
 #include "lintypes.h"
+#include "../lincity-ng/GameView.hpp"
 
-void do_time_step(UserDataMap);
+void do_time_step(GameView& gv, UserDataMap);
 //int count_groups(int gr);
 //void count_all_groups(int *group_count);
 //void set_mappoint(int x, int y, short selected_type);

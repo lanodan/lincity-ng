@@ -97,11 +97,11 @@ GameView::~GameView()
 //Static function to use with SDL_CreateThread
 int GameView::gameViewThread( void* data )
 {
-    GameView* gv = (GameView*) data;
-    gv->preReadImages();
-    gv->textures_ready = true;
+    GameView& gv = *((GameView*) data);
+    gv.preReadImages();
+    gv.textures_ready = true;
     //keep thread alive as long as there are SDL_Surfaces
-    while(!gv->stopThread && gv->remaining_images!=0)
+    while(!gv.stopThread && gv.remaining_images!=0)
     {   SDL_Delay(100);}
     return 0;
 }

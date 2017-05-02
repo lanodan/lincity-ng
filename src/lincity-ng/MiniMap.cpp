@@ -305,12 +305,6 @@ MiniMap::switchButton(CheckButton* button, int mousebutton)
         mps_set(mps_x, mps_y, MPS_GLOBAL);
     }
     else if(buttonName == "SwitchMapMPS") {
-        //FIXME
-        //that would be nice but MAP_MPS is actually the minimap
-/*
-        if (active_button_name == "SwitchMapMPS")
-        {   mps_map_page = (mps_map_page + 1) % MPS_MAP_PAGES;}
-*/
         mps_set(mps_x, mps_y, MPS_MAP);
     } else if(buttonName == "SwitchPBar") {
         //cycle through pbar styles
@@ -324,15 +318,6 @@ MiniMap::switchButton(CheckButton* button, int mousebutton)
     // remove "Switch" prefix
     std::string switchname = std::string(buttonName,
             6, buttonName.size()-1);
-/*
-    if(switchname == "EconomyGraph")
-    {
-        if(f!getGameView()->textures_ready)
-        {   switchname = "MiniMap";}
-        else
-        {   getGameView()->economyGraph_open = true;}
-    }
-*/
     switchView(switchname);
 }
 
@@ -343,12 +328,6 @@ MiniMap::switchView(const std::string& viewname)
         = getSwitchComponent(*(findRoot(this)), "MiniMapSwitch");
 
     switchComponent->switchComponent(viewname);
-/*
-    if (viewname != "EconomyGraph")
-    {   getGameView()->economyGraph_open = false;}
-*/
-    //TODO once this gets more complex PBar pages could become
-    //a nested switchComponent. For now only one case ;-)
     std::string viewGroupName = viewname;
     if (viewGroupName == "PBar2nd")
     {   viewGroupName = "PBar";}
@@ -602,13 +581,13 @@ MiniMap::speedButtonClicked(CheckButton* button, int)
 }
 
 void
-MiniMap::zoomInButtonClicked(Button* )
+MiniMap::zoomInButtonClicked( Button* )
 {
     getGameView()->zoomIn();
 }
 
 void
-MiniMap::zoomOutButtonClicked(Button* )
+MiniMap::zoomOutButtonClicked( Button* )
 {
     getGameView()->zoomOut();
 }
@@ -1099,7 +1078,7 @@ Color MiniMap::getColor(int x,int y) const
     return Color(0xFF,0,0xFF);
 }
 
-void MiniMap::event(const Event& event) {
+void MiniMap::event( const Event& event) {
 
     int left, top;
 

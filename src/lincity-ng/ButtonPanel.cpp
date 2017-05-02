@@ -541,7 +541,7 @@ void ButtonPanel::chooseButtonClicked(CheckButton* button, int mousebutton )
     if(cb != 0)
     {   cb->setTooltip( userOperation->createTooltip() );}
     examineMenuButtons();
-    getGameView()->setCursorSize(   userOperation->cursorSize() );
+    getGameView()->setCursorSize(   userOperation->cursorSize()  );
     updateToolInfo();
 }
 

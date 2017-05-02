@@ -19,16 +19,18 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define __main_lincity_hpp__
 
 #include <string>
+#include "GameView.hpp"
 
 void initLincity();
 void doLincityStep();
 void setLincitySpeed( int speed );
 
 //get Data form Lincity NG and Save City
-void saveCityNG( std::string newFilename );
+void saveCityNG( GameView&, std::string );
 
 //Load City and do setup for Lincity NG.
-bool loadCityNG( std::string filename );
+bool loadCityNG( GameView&, std::string );
+void execute_timestep( GameView& );
 
 #endif
 

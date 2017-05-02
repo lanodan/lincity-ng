@@ -56,7 +56,7 @@ void closeAllDialogs(){
     }
 }
 
-Dialog::Dialog( int type ){
+Dialog::Dialog( int type ) {
     initDialog();
     switch( type ){
         case ASK_COAL_SURVEY:
@@ -72,7 +72,9 @@ Dialog::Dialog( int type ){
     }
 }
 
-Dialog::Dialog( int type, std::string message, std::string extraString){
+Dialog::Dialog(int type,
+               const std::string& message,
+               const std::string& extraString) {
     initDialog();
     switch( type ){
         case MSG_DIALOG:
@@ -85,7 +87,7 @@ Dialog::Dialog( int type, std::string message, std::string extraString){
     }
 }
 
-Dialog::Dialog( int type, int x, int y ){
+Dialog::Dialog( int type, int x, int y ) {
     initDialog( x, y );
     switch( type ) {
         case BULLDOZE_MONUMENT:
@@ -114,12 +116,12 @@ Dialog::Dialog( int type, int x, int y ){
 }
 
 void Dialog::initDialog( int x /*= -1*/, int y /*= -1*/ ){
-    Component* root = getGameView();
     desktop = 0;
     myDialogComponent = 0;
     pointX = x;
     pointY = y;
     iAmBlocking = false;
+    Component* root = getGameView();
     if( root ) {
         while( root->getParent() )
             root = root->getParent();

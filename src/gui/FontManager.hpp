@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "Style.hpp"
 #include <SDL_ttf.h>
+#include <functional>
 
 /**
  * @class FontManager
@@ -70,7 +71,7 @@ private:
     Fonts fonts;
 };
 
-extern FontManager* fontManager;
+extern std::function<TTF_Font&(Style)> font_accessor;
 
 #endif
 

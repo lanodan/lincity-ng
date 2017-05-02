@@ -47,7 +47,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Dialog.hpp"
 #include "Config.hpp"
 
-extern void print_total_money(void);
 extern void init_types(void);
 extern void initFactories(void);
 
@@ -59,10 +58,14 @@ void setLincitySpeed( int speed )
     lincitySpeed = speed;
 }
 
-void execute_timestep ()
+void execute_timestep( GameView& gv )
 {
     static int dontskip = 0;
+    auto rocket_cb = std::function<void(int, int)>([&](int x, int y) {
+        new Dialog( ASK_LAUNCH_ROCKET, x, y );
+    });
     UserDataMap simulate_user_data;
+    simulate_user_data[std::type_index(typeid(RocketPad))] = rocket_cb;
 
     /* Get timestamp for this iteration */
     get_real_time();
@@ -73,16 +76,16 @@ void execute_timestep ()
     }
 
     // Do the simulation. Remember 1 month = 100 days, only the display fits real life :)
-    do_time_step(simulate_user_data);
+    do_time_step(gv, simulate_user_data);
 
     //draw the updated city
     if ( lincitySpeed != fast_time_for_year) {
         SDL_Delay(lincitySpeed); // This is the limiting factor for speed
 
         print_stats();
-        updateDate();
-        print_total_money();
-        getGameView()->requestRedraw();
+        updateDate(&gv);
+        print_total_money(&gv);
+        gv.requestRedraw();
 
     } else {
         /* SDL doc says to rely on at least 10 ms granurality on all OS without
@@ -93,14 +96,14 @@ void execute_timestep ()
         //in FAST-Mode, update at the last day in Month, so print_stats will work.
         if( ( total_time % NUMOF_DAYS_IN_MONTH ) == NUMOF_DAYS_IN_MONTH - 1 ){
             print_stats ();
-            updateDate();
-            print_total_money();
+            updateDate(&gv);
+            print_total_money(&gv);
         }
         if (dontskip++ == fast_time_for_year ) {
             // The point of fast mode is to be really fast. So skip frames for speed
             // fast_time_for_year is read from config file = parameter named "quickness"
             dontskip = 0;
-            getGameView()->requestRedraw();
+            gv.requestRedraw();
         }
     }
 }
@@ -108,11 +111,10 @@ void execute_timestep ()
 /*
  * get Data form Lincity NG and Save City
  */
-void saveCityNG( std::string newFilename ){
+void saveCityNG( GameView& gv, std::string newFilename ){
     if (getGame())
     {
-        GameView* gv = getGameView();
-        if( gv ){ gv->writeOrigin(); }
+        gv.writeOrigin();
         save_city(const_cast<char*>( newFilename.c_str() ) );
     }
 }
@@ -120,12 +122,11 @@ void saveCityNG( std::string newFilename ){
 /*
  * Load City and do setup for Lincity NG.
  */
-bool loadCityNG( std::string filename ){
+bool loadCityNG( GameView& gv, std::string filename ){
     if( PHYSFS_isDirectory( filename.c_str() ))
     {   return false;}
 
-
-        const char* directory = PHYSFS_getRealDir(filename.c_str());
+    const char* directory = PHYSFS_getRealDir(filename.c_str());
     if (directory)
     {
         //FIXME PHYSFS_getWriteDir() does not work for built in scenarios
@@ -133,10 +134,9 @@ bool loadCityNG( std::string filename ){
         filename = dir + PHYSFS_getDirSeparator() + filename;
         if( file_exists( const_cast<char*>( filename.c_str()) ) )
         {
-            load_city_2(const_cast<char*>(filename.c_str()));
+            load_city_2(const_cast<char*>(filename.c_str()), [&]() { print_total_money(&gv); });
             update_avail_modules(0);
-            GameView* gv = getGameView();
-            if( gv ){ gv->readOrigin(); }
+            gv.readOrigin();
             return true;
         }
         else

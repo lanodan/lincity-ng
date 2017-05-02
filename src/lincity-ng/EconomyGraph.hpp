@@ -20,18 +20,21 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "gui/Component.hpp"
 #include "gui/XmlReader.hpp"
+#include "gui/FontManager.hpp"
 #include "gui/TextureManager.hpp"
 #include "gui/Paragraph.hpp"
 #include "gui/Style.hpp"
 
 #include "CheckButton.hpp"
 
+#include <functional>
+
 class EconomyGraph : public Component {
 public:
     EconomyGraph();
     ~EconomyGraph();
 
-    void parse(XmlReader& reader);
+    void parse(XmlReader&);
     void draw(Painter& painter);
     void updateData();    
     void newFPS( int frame );
@@ -40,7 +43,7 @@ private:
     void drawHistoryLineGraph( Painter& painter, Rect2D mg );
     void drawSustBarGraph( Painter& painter, Rect2D mg );
     void drawFPSGraph( Painter& painter, Rect2D fpsRect );
- 
+
     int* fps;
     Texture* labelTextureMIN;
     Texture* labelTexturePRT;

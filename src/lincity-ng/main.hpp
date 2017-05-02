@@ -18,23 +18,19 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef __MAIN_HPP__
 #define __MAIN_HPP__
 
+#include "gui/Painter.hpp"
+#include "gui/TextureManager.hpp"
+#include "gui/FontManager.hpp"
 #include "tinygettext/tinygettext.hpp"
+
+#include <memory>
 
 enum MainState {
     MAINMENU, INGAME, QUIT, RESTART
 };
 
-
 void videoSizeChanged(int width, int height);
 void resizeVideo(int width, int height, bool fullscreen);
-
-class Painter;
-
-/** global instance of currently used painter object.
- * Note: Don't use this in your components, but the one passed in the draw
- *       function!
- */
-extern Painter* painter;
 
 #endif
 

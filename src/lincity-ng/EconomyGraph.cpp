@@ -116,7 +116,7 @@ void EconomyGraph::parse( XmlReader& reader ){
     Style labelStyle;
     labelStyle.font_family = "sans";
     labelStyle.font_size = 10;
-    TTF_Font* font = fontManager->getFont( labelStyle );
+    auto font = &font_accessor(labelStyle);
     SDL_Surface* labelXXX;
 		   /* MIN=Mining, PRT=Import/export from port,
 		      MNY=Money, POP=Population, TEC=Technology,
@@ -224,7 +224,7 @@ void EconomyGraph::updateData(){
                 std::cerr << "Problem with ok_dial_box: " << e.what() << "\n";
                 std::ostringstream text;
                 text << "ok_dial_box:' allgone.xml" << "' + \"" << message << "\"\n";
-                updateMessageText( text.str() );
+                updateMessageText( getGameView(), text.str() );
             }
             nobodyHomeDialogShown = true;
         }

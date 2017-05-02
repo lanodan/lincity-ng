@@ -44,7 +44,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "Config.hpp"
 
 extern int lincitySpeed;
-extern void execute_timestep(void);
 
 Game* gameptr = 0;
 
@@ -90,7 +89,7 @@ void Game::showHelpWindow( std::string topic ){
 void Game::backToMainMenu(){
     closeAllDialogs();
     getButtonPanel()->selectQueryTool();
-    saveCityNG( "9_currentGameNG.scn" );
+    saveCityNG( game_view(), "9_currentGameNG.scn" );
     running = false;
     quitState = MAINMENU;
 }
@@ -114,24 +113,24 @@ void Game::quickLoad(){
     closeAllDialogs();
 
     //load file
-    getGameView()->printStatusMessage( "quick load...");
+    game_view().printStatusMessage( "quick load..." );
     std::string filename;
     filename.append( "quicksave.scn" );
-    if( loadCityNG( filename ) ){
-          getGameView()->printStatusMessage( "quick load successful.");
+    if( loadCityNG( game_view(), filename ) ){
+        game_view().printStatusMessage( "quick load successful." );
     } else {
-          getGameView()->printStatusMessage( "quick load failed!");
+        game_view().printStatusMessage( "quick load failed!" );
     }
 }
 
 void Game::quickSave(){
     //save file
-    getGameView()->printStatusMessage( "quick save...");
-    saveCityNG( "quicksave.scn" );
+    game_view().printStatusMessage( "quick save..." );
+    saveCityNG( game_view(), "quicksave.scn" );
 }
 
 void Game::testAllHelpFiles(){
-    getGameView()->printStatusMessage( "Testing Help Files...");
+    game_view().printStatusMessage( "Testing Help Files...");
 
     std::string filename;
     std::string directory = "help/en";
@@ -159,7 +158,10 @@ void Game::testAllHelpFiles(){
 }
 
 MainState
-Game::run()
+Game::run( Painter& painter,
+           VideoResetCB video_reset_cb,
+           TimeStepCB   timestep_cb
+           )
 {
     SDL_Event event;
     running = true;
@@ -171,7 +173,7 @@ Game::run()
     gui->resize(getConfig()->videoX, getConfig()->videoY);
     int frame = 0;
     while(running) {
-        getGameView()->scroll();
+        game_view().scroll();
         while(SDL_PollEvent(&event)) {
             switch(event.type) {
                 case SDL_WINDOWEVENT:
@@ -209,7 +211,7 @@ Game::run()
                             {
                                 main_screen_originx = constructionCount[i]->x;
                                 main_screen_originy = constructionCount[i]->y;
-                                getGameView()->readOrigin(true);
+                                game_view().readOrigin(true);
                                 mps_set( main_screen_originx, main_screen_originy, MPS_MAP);
                                 mps_update();
                                 mps_refresh();
@@ -269,7 +271,7 @@ Game::run()
                     break;
                 }
                 case SDL_QUIT:
-                    saveCityNG( "9_currentGameNG.scn" );
+                    saveCityNG( game_view(), "9_currentGameNG.scn" );
                     running = false;
                     quitState = QUIT;
                     break;
@@ -305,7 +307,7 @@ Game::run()
         else if(!lincitySpeed)
         {   frame = 0;}
         /* SDL_Delay is done in execute_timestep */
-        execute_timestep ();
+        timestep_cb (game_view());
     }
     return quitState;
 }

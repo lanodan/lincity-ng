@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define __GAME_HPP__
 
 #include "main.hpp"
+#include "GameView.hpp"
 #include <memory>
 #include "gui/Button.hpp"
 
@@ -29,17 +30,21 @@ class HelpWindow;
 
 class Game
 {
+    using GameViewAccessor = std::function<GameView&()>;
+    using VideoResetCB = std::function<void(int, int)>;
+    using TimeStepCB   = std::function<void(GameView&)>;
 public:
     Game( SDL_Window* window );
     ~Game();
 
-    MainState run();
+    MainState run( Painter&, VideoResetCB, TimeStepCB );
     void gameButtonClicked( Button* button );
     void showHelpWindow( std::string topic );
 
 private:
     std::unique_ptr<Component> gui;
 
+    GameViewAccessor game_view;
     bool running;
     MainState quitState;
     void backToMainMenu();

@@ -39,7 +39,7 @@ public:
 
 private:
     std::unique_ptr<Component> gui;
-    
+
     bool running;
     MainState quitState;
     void backToMainMenu();

@@ -879,31 +879,19 @@ MainMenu::newGameStartButtonClicked(Button* )
     city->with_village  = (getCheckButton(*currentMenu,"WithVillage" )->state == CheckButton::STATE_CHECKED);
     city->without_trees = (getCheckButton(*currentMenu,"WithoutTrees")->state == CheckButton::STATE_CHECKED);
 
-    if( baseName == "RiverDelta" ){
-        new_city( &main_screen_originx, &main_screen_originy, city);
+    std::map<std::string, std::function<void(int*,int*,city_settings*)>> fn_map;
+    fn_map["RiverDelta"] = new_city;
+    fn_map["DesertArea"] = new_desert_city;
+    fn_map["TemperateArea"] = new_temperate_city;
+    fn_map["SwampArea"] = new_swamp_city;
+
+    try {
+        fn_map.at(baseName)(&main_screen_originx, &main_screen_originy, city);
         GameView* gv = getGameView();
         if( gv ){ gv->readOrigin(); }
         quitState = INGAME;
         running = false;
-    } else if( baseName == "DesertArea" ){
-        new_desert_city( &main_screen_originx, &main_screen_originy, city);
-        GameView* gv = getGameView();
-        if( gv ){ gv->readOrigin(); }
-        quitState = INGAME;
-        running = false;
-    } else if( baseName == "TemperateArea" ){
-        new_temperate_city( &main_screen_originx, &main_screen_originy, city);
-        GameView* gv = getGameView();
-        if( gv ){ gv->readOrigin(); }
-        quitState = INGAME;
-        running = false;
-    } else if( baseName == "SwampArea" ){
-        new_swamp_city( &main_screen_originx, &main_screen_originy, city);
-        GameView* gv = getGameView();
-        if( gv ){ gv->readOrigin(); }
-        quitState = INGAME;
-        running = false;
-    } else {
+    } catch (const std::out_of_range&) {
         if( loadCityNG( mFilename ) ){
             strcpy (given_scene, baseName.c_str());
             quitState = INGAME;

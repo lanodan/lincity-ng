@@ -33,7 +33,7 @@ Construction *MarketConstructionGroup::createConstruction(int x, int y) {
 }
 
 
-void Market::update()
+void Market::update(std::any)
 {
     int ratio, trade_ratio, n;
     int lvl, market_lvl;
@@ -178,7 +178,7 @@ void Market::cover()
     }
 }
 
-void Market::report()
+void Market::report(std::any)
 {
     int i = 0;
 

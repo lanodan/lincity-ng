@@ -39,8 +39,8 @@ public:
         this->trafficCount = this->commodityCount;
     }
     virtual ~Powerline() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
     void flow_power();
     std::map<Commodities, int> trafficCount;
     int anim_counter;

@@ -31,7 +31,7 @@ Construction *Coal_powerConstructionGroup::createConstruction(int x, int y) {
     return new Coal_power(x, y, this);
 }
 
-void Coal_power::update()
+void Coal_power::update(std::any)
 {
     int mwh_made = (commodityCount[STUFF_MWH] + mwh_output <= MAX_MWH_AT_COALPS)?mwh_output:MAX_MWH_AT_COALPS-commodityCount[STUFF_MWH];
     int jobs_used = JOBS_COALPS_GENERATE*(mwh_made/100)/(mwh_output/100);
@@ -104,7 +104,7 @@ void Coal_power::update()
 
 }
 
-void Coal_power::report()
+void Coal_power::report(std::any)
 {
     int i = 0;
     mps_store_sd(i++, constructionGroup->name, ID);

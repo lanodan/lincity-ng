@@ -106,8 +106,8 @@ public:
         }
     }
     virtual ~Organic_farm() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 
     int  ugwCount;
     int  max_foodprod;

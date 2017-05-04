@@ -74,7 +74,7 @@ static void do_periodic_events(void);
 static void end_of_month_update(void);
 static void start_of_year_update(void);
 static void end_of_year_update(void);
-static void simulate_mappoints(void);
+static void simulate_mappoints(UserDataMap);
 //extern void desert_water_frontier(int originx, int originy, int w, int h);
 
 static void sustainability_test(void);
@@ -83,7 +83,7 @@ static int sust_fire_cover(void);
 /* ---------------------------------------------------------------------- *
  * Public Functions
  * ---------------------------------------------------------------------- */
-void do_time_step(void)
+void do_time_step(UserDataMap simulation_user_data)
 {
     if (flag_warning) {
         flag_warning = false;
@@ -115,7 +115,7 @@ void do_time_step(void)
     ConstructionManager::executePendingRequests();
 
     /* Run through simulation equations for each farm, residence, etc. */
-    simulate_mappoints();
+    simulate_mappoints(simulation_user_data);
 
     /* Remove all too old cars*/
     Vehicle::cleanVehicleList();
@@ -278,7 +278,7 @@ static void end_of_year_update(void)
     print_total_money();
 }
 
-static void simulate_mappoints(void)
+static void simulate_mappoints(UserDataMap user_data)
 {
     Construction *construction;
     constructionCount.shuffle();
@@ -288,7 +288,7 @@ static void simulate_mappoints(void)
         if (construction)
         {
             construction->trade();
-            construction->update();
+            construction->update(user_data[construction->reflect()]);
         }
     }
     for(std::list<Vehicle*>::iterator it = Vehicle::vehicleList.begin();

@@ -25,7 +25,7 @@ Construction *BlacksmithConstructionGroup::createConstruction(int x, int y) {
     return new Blacksmith(x, y, this);
 }
 
-void Blacksmith::update()
+void Blacksmith::update(std::any)
 {
     //monthly update
     if (total_time % 100 == 0)
@@ -72,7 +72,7 @@ void Blacksmith::update()
 
 }
 
-void Blacksmith::report()
+void Blacksmith::report(std::any)
 {
     int i = 0;
 

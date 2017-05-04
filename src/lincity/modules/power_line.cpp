@@ -27,7 +27,7 @@ Construction *PowerlineConstructionGroup::createConstruction(int x, int y)
     return new Powerline(x, y, this);
 }
 
-void Powerline::update()
+void Powerline::update(std::any)
 {
     if (commodityCount[STUFF_MWH] > 0)
     {
@@ -54,7 +54,7 @@ void Powerline::update()
     } // endif MWH
 }
 
-void Powerline::report()
+void Powerline::report(std::any)
 {
     int i = 0;
 

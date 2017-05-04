@@ -73,8 +73,8 @@ public:
         initialize_commodities();
     }
     virtual ~Blacksmith() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 
     int  goods_made;
     int  anim;

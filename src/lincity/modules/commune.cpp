@@ -25,7 +25,7 @@ Construction *CommuneConstructionGroup::createConstruction(int x, int y) {
     return new Commune(x, y, this);
 }
 
-void Commune::update()
+void Commune::update(std::any)
 {
     int tmpUgwCount = ugwCount;
     int tmpCoalprod = coalprod;
@@ -130,7 +130,7 @@ void Commune::update()
     }
 }
 
-void Commune::report()
+void Commune::report(std::any)
 {
     int i = 0;
     mps_store_sd(i++, constructionGroup->name, ID);

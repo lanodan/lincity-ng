@@ -57,8 +57,8 @@ public:
     }
 
     virtual ~Waterwell() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 
     int water_output;
     int ugwCount;

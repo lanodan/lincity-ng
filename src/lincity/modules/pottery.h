@@ -67,8 +67,8 @@ public:
         initialize_commodities();
     }
     virtual ~Pottery() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 
     int  anim;
     int  pauseCounter;

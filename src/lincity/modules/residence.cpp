@@ -100,7 +100,7 @@ Construction *ResidenceConstructionGroup::createConstruction(int x, int y) {
     return new Residence(x, y, this);
 }
 
-void Residence::update()
+void Residence::update(std::any)
 {
     int bad = 35, good = 30;    /* (un)desirability of living here */
     int r, po, swing;
@@ -341,7 +341,7 @@ void Residence::update()
    housing += max_population;
 }
 
-void Residence::report()
+void Residence::report(std::any)
 {
     int i = 0;
 

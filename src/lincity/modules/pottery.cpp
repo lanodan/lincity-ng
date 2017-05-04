@@ -25,7 +25,7 @@ Construction *PotteryConstructionGroup::createConstruction(int x, int y) {
     return new Pottery(x, y, this);
 }
 
-void Pottery::update()
+void Pottery::update(std::any)
 {
     if (total_time % 100 == 0)
     {
@@ -67,7 +67,7 @@ void Pottery::update()
     }
 }
 
-void Pottery::report()
+void Pottery::report(std::any)
 {
     int i = 0;
 

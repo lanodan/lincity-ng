@@ -28,7 +28,7 @@ Construction *SolarPowerConstructionGroup::createConstruction(int x, int y) {
     return new SolarPower(x, y, this);
 }
 
-void SolarPower::update()
+void SolarPower::update(std::any)
 {
     int mwh_made = (commodityCount[STUFF_MWH] + mwh_output <= MAX_MWH_AT_SOLARPS)?mwh_output:MAX_MWH_AT_SOLARPS-commodityCount[STUFF_MWH];
     int jobs_used = SOLAR_POWER_JOBS * mwh_made / mwh_output;
@@ -47,7 +47,7 @@ void SolarPower::update()
     }
 }
 
-void SolarPower::report()
+void SolarPower::report(std::any)
 {
     int i = 0;
 

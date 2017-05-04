@@ -27,7 +27,7 @@ Construction *Organic_farmConstructionGroup::createConstruction(int x, int y) {
 }
 
 
-void Organic_farm::update()
+void Organic_farm::update(std::any)
 {
     int i = (total_time + crop_rotation_key * 1200 + month_stagger) % 4800;
     int used_jobs = 0;
@@ -102,7 +102,7 @@ void Organic_farm::update()
     }
 }
 
-void Organic_farm::report()
+void Organic_farm::report(std::any)
 {
     int i = 0;
 

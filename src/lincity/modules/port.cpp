@@ -67,7 +67,7 @@ void Port::trade_connection()
     }
 }
 
-void Port::update()
+void Port::update(std::any)
 {
     daily_ic = 0;
     daily_et = 0;
@@ -106,7 +106,7 @@ void Port::update()
     import_cost += daily_ic;
 }
 
-void Port::report()
+void Port::report(std::any)
 {
     int i = 0;
     mps_store_sd(i++, constructionGroup->name, ID);

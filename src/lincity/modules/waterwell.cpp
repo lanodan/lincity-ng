@@ -37,7 +37,7 @@ Construction *WaterwellConstructionGroup::createConstruction(int x, int y) {
     return new Waterwell(x, y, this);
 }
 
-void Waterwell::update()
+void Waterwell::update(std::any)
 {
     if(commodityCount[STUFF_WATER] + water_output <= MAX_WATER_AT_WATERWELL)
     {
@@ -52,7 +52,7 @@ void Waterwell::update()
     }
 }
 
-void Waterwell::report()
+void Waterwell::report(std::any)
 {
     int i = 0;
 

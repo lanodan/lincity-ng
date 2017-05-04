@@ -62,6 +62,7 @@ void setLincitySpeed( int speed )
 void execute_timestep ()
 {
     static int dontskip = 0;
+    UserDataMap simulate_user_data;
 
     /* Get timestamp for this iteration */
     get_real_time();
@@ -72,7 +73,7 @@ void execute_timestep ()
     }
 
     // Do the simulation. Remember 1 month = 100 days, only the display fits real life :)
-    do_time_step();
+    do_time_step(simulate_user_data);
 
     //draw the updated city
     if ( lincitySpeed != fast_time_for_year) {

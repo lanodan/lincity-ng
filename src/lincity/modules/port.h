@@ -121,8 +121,8 @@ public:
         setCommodityRulesSaved(&commodityRuleCount);
     }
     virtual ~Port() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
     int buy_stuff(Commodities stuff_ID);
     int sell_stuff(Commodities stuff_ID);
     void trade_connection();

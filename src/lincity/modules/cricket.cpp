@@ -27,7 +27,7 @@ Construction *CricketConstructionGroup::createConstruction(int x, int y) {
     return new Cricket(x, y, this);
 }
 
-void Cricket::update()
+void Cricket::update(std::any)
 {
     ++daycount;
     if (commodityCount[STUFF_JOBS] >= CRICKET_JOBS
@@ -81,7 +81,7 @@ void Cricket::cover()
     }
 }
 
-void Cricket::report()
+void Cricket::report(std::any)
 {
     int i = 0;
     const char* p;

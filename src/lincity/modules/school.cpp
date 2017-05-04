@@ -27,7 +27,7 @@ Construction *SchoolConstructionGroup::createConstruction(int x, int y) {
     return new School(x, y, this);
 }
 
-void School::update()
+void School::update(std::any)
 {
     if (commodityCount[STUFF_JOBS] >= JOBS_MAKE_TECH_SCHOOL
     &&  commodityCount[STUFF_GOODS] >= GOODS_MAKE_TECH_SCHOOL
@@ -80,7 +80,7 @@ void School::update()
     }
 }
 
-void School::report()
+void School::report(std::any)
 {
     int i = 0;
     mps_store_sd(i++, constructionGroup->name, ID);

@@ -33,7 +33,7 @@ Construction *IndustryHeavyConstructionGroup::createConstruction(int x, int y) {
     return new IndustryHeavy(x, y, this);
 }
 
-void IndustryHeavy::update()
+void IndustryHeavy::update(std::any)
 {
     // can we produce steel?
     int steel = ( commodityCount[STUFF_JOBS] >= MAX_ORE_USED / JOBS_MAKE_STEEL + JOBS_LOAD_ORE + JOBS_LOAD_COAL + JOBS_LOAD_STEEL
@@ -127,7 +127,7 @@ void IndustryHeavy::update()
     }
 }
 
-void IndustryHeavy::report()
+void IndustryHeavy::report(std::any)
 {
     int i = 0;
 

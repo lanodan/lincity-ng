@@ -34,9 +34,11 @@ void get_type_name(short type, char *s);
 unsigned short get_group_of_type(unsigned short selected_type);
 void set_map_groups(void);
 /********** Data structures ***************/
+#include <any>
 #include <list>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <string>
 #include <cstring>
 #include <sstream>
@@ -48,6 +50,9 @@ void set_map_groups(void);
 #include <SDL_image.h>
 #include "gui/Texture.hpp"
 #include "tinygettext/gettext.hpp"
+#include <typeindex>
+
+using UserDataMap = std::unordered_map<std::type_index, std::any>;
 
 class Construction;
 class ResourceGroup;
@@ -183,14 +188,17 @@ struct CommodityRule{
 };
 
 
+class Reflectable {
+public:
+    virtual std::type_index reflect() { return std::type_index(typeid(Reflectable)); }
+    virtual ~Reflectable() {}
+};
 
-
-class Construction {
+class Construction : public Reflectable {
 public:
     virtual ~Construction() {}
-    virtual void update() = 0;
-    virtual void report() = 0;
-
+    virtual void update(std::any) = 0;
+    virtual void report(std::any) = 0;
 
     ConstructionGroup *constructionGroup;
     //ResourceGroup *graphicsGroup;

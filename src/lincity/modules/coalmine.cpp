@@ -32,7 +32,7 @@ Construction *CoalmineConstructionGroup::createConstruction(int x, int y)
     return new Coalmine(x, y, this);
 }
 
-void Coalmine::update()
+void Coalmine::update(std::any)
 {
     bool coal_found = false;
     //scan available coal_reserve in range
@@ -113,7 +113,7 @@ void Coalmine::update()
     {   ConstructionManager::submitRequest(new ConstructionDeletionRequest(this));}
 }
 
-void Coalmine::report()
+void Coalmine::report(std::any)
 {
     int i = 0;
     mps_store_sd(i++, constructionGroup->name, ID);

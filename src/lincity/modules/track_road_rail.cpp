@@ -103,7 +103,7 @@ Construction *TransportConstructionGroup::createConstruction(int x, int y)
     return new Transport(x, y, this);
 }
 
-void Transport::update()
+void Transport::update(std::any)
 {
     switch (constructionGroup->group)
     {
@@ -187,7 +187,7 @@ void Transport::list_traffic(int *i)
     }
 }
 
-void Transport::report()
+void Transport::report(std::any)
 {
     int i = 0;
 

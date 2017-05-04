@@ -26,7 +26,7 @@ Construction *WindmillConstructionGroup::createConstruction(int x, int y) {
     return new Windmill(x, y, this);
 }
 
-void Windmill::update()
+void Windmill::update(std::any)
 {
     if (!(total_time%(WINDMILL_RCOST)))
     {   windmill_cost++;}
@@ -58,7 +58,7 @@ void Windmill::update()
     }
 }
 
-void Windmill::report()
+void Windmill::report(std::any)
 {
     int i = 0;
     mps_store_sd(i++, constructionGroup->name, ID);

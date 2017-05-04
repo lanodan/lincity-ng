@@ -99,8 +99,8 @@ public:
         this->ye = (tmp > lenm1)? lenm1 : tmp;
         this->cover();
     }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
     void cover();
     void toggleEvacuation();
 

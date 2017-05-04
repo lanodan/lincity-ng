@@ -26,7 +26,7 @@ Construction *UniversityConstructionGroup::createConstruction(int x, int y) {
     return new University(x, y, this);
 }
 
-void University::update()
+void University::update(std::any)
 {
     university_cost += UNIVERSITY_RUNNING_COST;
     //do the teaching
@@ -49,7 +49,7 @@ void University::update()
     }
 }
 
-void University::report()
+void University::report(std::any)
 {
     int i = 0;
     mps_store_sd(i++, constructionGroup->name, ID);

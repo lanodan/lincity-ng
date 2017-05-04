@@ -30,7 +30,7 @@ Construction *FireConstructionGroup::createConstruction(int x, int y) {
     return new Fire(x, y, this);
 }
 
-void Fire::update()
+void Fire::update(std::any)
 {
     int i;
     /* this so we don't get whole blocks changing in one go. */
@@ -100,7 +100,7 @@ void Fire::update()
     }
 }
 
-void Fire::report()
+void Fire::report(std::any)
 {
     int i = 0;
 

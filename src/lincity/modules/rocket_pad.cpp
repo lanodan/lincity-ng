@@ -13,6 +13,8 @@
 #include "lincity-ng/Sound.hpp"
 #include "lincity-ng/Dialog.hpp"
 
+#include <functional>
+
 RocketPadConstructionGroup rocketPadConstructionGroup(
     N_("Rocket Pad"),
      TRUE,                     /* need credit? */
@@ -33,7 +35,7 @@ Construction *RocketPadConstructionGroup::createConstruction(int x, int y) {
 
 extern void ok_dial_box(const char *, int, const char *);
 
-void RocketPad::update()
+void RocketPad::update(std::any user_data)
 {
     // ok the party is over
     if (frameIt->frame == 7)
@@ -211,7 +213,7 @@ void RocketPad::remove_people(int num)
     {   ok_dial_box("launch-gone.mes", GOOD, 0L);}
 }
 
-void RocketPad::report()
+void RocketPad::report(std::any)
 {
     int i = 0;
     mps_store_sd(i++,constructionGroup->getName(), ID);

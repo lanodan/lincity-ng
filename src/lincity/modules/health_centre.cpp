@@ -26,7 +26,7 @@ Construction *HealthCentreConstructionGroup::createConstruction(int x, int y ) {
     return new HealthCentre(x, y, this);
 }
 
-void HealthCentre::update()
+void HealthCentre::update(std::any)
 {
     ++daycount;
     if (commodityCount[STUFF_JOBS] >= HEALTH_CENTRE_JOBS
@@ -70,7 +70,7 @@ void HealthCentre::cover()
     }
 }
 
-void HealthCentre::report() {
+void HealthCentre::report(std::any) {
     int i = 0;
     const char* p;
 

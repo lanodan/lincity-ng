@@ -74,8 +74,8 @@ public:
         setMemberSaved(&this->total_ore_reserve, "total_ore_reserve");
     }
     virtual ~Oremine() {}
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 
 
     int total_ore_reserve;

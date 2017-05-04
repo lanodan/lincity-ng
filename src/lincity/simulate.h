@@ -6,7 +6,12 @@
 #ifndef __simulate_h__
 #define __simulate_h__
 
-void do_time_step(void);
+#include <map>
+#include <typeindex>
+
+#include "lintypes.h"
+
+void do_time_step(UserDataMap);
 //int count_groups(int gr);
 //void count_all_groups(int *group_count);
 //void set_mappoint(int x, int y, short selected_type);

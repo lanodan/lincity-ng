@@ -92,8 +92,8 @@ public:
         this->current_coal_reserve = coal;
     }
     virtual ~Coalmine() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 
     int xs, ys, xe, ye;
     int initial_coal_reserve;

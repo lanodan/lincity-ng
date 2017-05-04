@@ -27,7 +27,7 @@ Construction *TipConstructionGroup::createConstruction(int x, int y ) {
 }
 
 
-void Tip::update()
+void Tip::update(std::any)
 {
     //the waste is always slowly degrading
     //max degradiation per day is about 42 (10M/240k)
@@ -71,7 +71,7 @@ void Tip::update()
     }
 }
 
-void Tip::report()
+void Tip::report(std::any)
 {
     int i = 0;
 

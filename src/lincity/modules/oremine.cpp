@@ -30,7 +30,7 @@ Construction *OremineConstructionGroup::createConstruction(int x, int y)
     return new Oremine(x, y, this);
 }
 
-void Oremine::update()
+void Oremine::update(std::any)
 {
     int xx,yy;
     animate = false;
@@ -116,7 +116,7 @@ void Oremine::update()
     {   ConstructionManager::submitRequest(new OreMineDeletionRequest(this));}
 }
 
-void Oremine::report()
+void Oremine::report(std::any)
 {
     int i = 0;
     mps_store_sd(i++, constructionGroup->name, ID);

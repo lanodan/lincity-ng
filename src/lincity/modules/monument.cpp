@@ -30,7 +30,7 @@ Construction *MonumentConstructionGroup::createConstruction(int x, int y) {
     return new Monument(x, y, this);
 }
 
-void Monument::update()
+void Monument::update(std::any)
 {
     if ((commodityCount[STUFF_JOBS] > MONUMENT_GET_JOBS) && (completion < 100))
     {
@@ -87,7 +87,7 @@ void Monument::update()
     {   frameIt->frame = 0;}
 }
 
-void Monument::report()
+void Monument::report(std::any)
 {
     int i = 0;
 

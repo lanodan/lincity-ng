@@ -74,8 +74,8 @@ public:
         initialize_commodities();
     }
     virtual ~Mill() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 
     int  anim;
     int  pol_count;

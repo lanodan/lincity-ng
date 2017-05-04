@@ -140,8 +140,8 @@ public:
             }
         }
     }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 
     std::list<ExtraFrame>::iterator fr_begin, fr_end;
     int  tech;

@@ -62,8 +62,8 @@ public:
         initialize_commodities();
     }
     virtual ~University() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 
     int total_tech_made;
     int working_days, busy;

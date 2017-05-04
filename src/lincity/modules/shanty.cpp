@@ -122,7 +122,7 @@ void update_shanty(void)
     }
 }
 
-void Shanty::update()
+void Shanty::update(std::any)
 {
     //steal stuff and make waste
     commodityCount[STUFF_WASTE] += SHANTY_PUT_WASTE;
@@ -175,7 +175,7 @@ void Shanty::update()
     }
 }
 
-void Shanty::report()
+void Shanty::report(std::any)
 {
     int i = 0;
     mps_store_sd(i++, constructionGroup->name, ID);

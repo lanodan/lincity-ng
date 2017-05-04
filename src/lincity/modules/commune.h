@@ -96,8 +96,8 @@ public:
         {   this->coalprod = COMMUNE_COAL_MADE;}
     }
     virtual ~Commune() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 
     int  anim;
     int  ugwCount;

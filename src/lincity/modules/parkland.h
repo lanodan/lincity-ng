@@ -41,8 +41,8 @@ public:
         init_resources();
         this->flags |= FLAG_NEVER_EVACUATE;
     }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 };
 
 /** @file lincity/modules/parkland.h */

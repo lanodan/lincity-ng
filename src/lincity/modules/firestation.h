@@ -79,8 +79,8 @@ public:
         this->ye = (tmp > lenm1)? lenm1 : tmp;
     }
     virtual ~FireStation() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
     void cover();
 
     int xs, ys, xe, ye;

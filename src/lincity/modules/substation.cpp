@@ -31,7 +31,7 @@ Construction *SubstationConstructionGroup::createConstruction(int x, int y) {
     return new Substation(x, y, this);
 }
 
-void Substation::update()
+void Substation::update(std::any)
 {
     int use_MWH = (SUBSTATION_MWH < commodityCount[STUFF_MWH])?SUBSTATION_MWH:commodityCount[STUFF_MWH];
     if ( (use_MWH > 0)
@@ -56,7 +56,7 @@ void Substation::update()
     soundGroup = frameIt->resourceGroup;
 }
 
-void Substation::report()
+void Substation::report(std::any)
 {
     int i = 0;
     mps_store_sd(i++, constructionGroup->name, ID);

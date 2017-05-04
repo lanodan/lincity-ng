@@ -41,13 +41,13 @@ Construction *ParklandConstructionGroup::createConstruction(int x, int y) {
     return new Parkland(x, y, this);
 }
 
-void Parkland::update()
+void Parkland::update(std::any)
 {
     if (world(x,y)->pollution > 10 && (total_time & 1) == 0)
         world(x,y)->pollution --;
 }
 
-void Parkland::report()
+void Parkland::report(std::any)
 {
     int i = 0;
 

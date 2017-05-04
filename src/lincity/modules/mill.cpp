@@ -26,7 +26,7 @@ Construction *MillConstructionGroup::createConstruction(int x, int y) {
     return new Mill(x, y, this);
 }
 
-void Mill::update()
+void Mill::update(std::any)
 {
     bool use_coal = (commodityCount[STUFF_COAL]*MAX_KWH_AT_MILL > commodityCount[STUFF_KWH]*MAX_COAL_AT_MILL);
     flags &= ~(FLAG_POWERED);
@@ -64,7 +64,7 @@ void Mill::update()
     }
 }
 
-void Mill::report()
+void Mill::report(std::any)
 {
     int i = 0;
     mps_store_sd(i++, constructionGroup->name, ID);

@@ -28,7 +28,7 @@ Construction *FireStationConstructionGroup::createConstruction(int x, int y ) {
     return new FireStation(x, y, this);
 }
 
-void FireStation::update()
+void FireStation::update(std::any)
 {
     ++daycount;
     if (commodityCount[STUFF_JOBS] >= FIRESTATION_JOBS
@@ -85,7 +85,7 @@ void FireStation::cover()
     }
 }
 
-void FireStation::report()
+void FireStation::report(std::any)
 {
     int i = 0;
     const char* p;

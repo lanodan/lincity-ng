@@ -64,8 +64,8 @@ public:
     }
 
     virtual ~Monument() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 
     int  working_days, busy;
     int  tech_made;

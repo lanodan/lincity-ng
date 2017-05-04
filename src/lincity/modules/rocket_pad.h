@@ -85,8 +85,11 @@ public:
     }
 
     virtual ~RocketPad() { }
-    virtual void update();
-    virtual void report();
+    void update(std::any);
+    void report(std::any);
+    std::type_index reflect() {
+        return std::type_index(typeid(RocketPad));
+    }
     void launch_rocket();
     void remove_people(int num);
     int working_days, busy;

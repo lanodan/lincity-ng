@@ -66,8 +66,8 @@ public:
         initialize_commodities();
     }
     virtual ~Windpower() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 
     int  mwh_output;
     int  tech;

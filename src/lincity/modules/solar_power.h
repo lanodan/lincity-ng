@@ -57,8 +57,8 @@ public:
         setMemberSaved(&this->mwh_output, "mwh_output");
         initialize_commodities();
     }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
     int  mwh_output;
     int  tech;
     int  working_days, busy;

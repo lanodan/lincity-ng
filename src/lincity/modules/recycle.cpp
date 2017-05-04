@@ -26,7 +26,7 @@ Construction *RecycleConstructionGroup::createConstruction(int x, int y) {
     return new Recycle(x, y, this);
 }
 
-void Recycle::update()
+void Recycle::update(std::any)
 {
     recycle_cost += RECYCLE_RUNNING_COST;
 
@@ -59,7 +59,7 @@ void Recycle::update()
     {   commodityCount[STUFF_WASTE] -= BURN_WASTE_AT_RECYCLE;}
 }
 
-void Recycle::report()
+void Recycle::report(std::any)
 {
     int i = 0;
 

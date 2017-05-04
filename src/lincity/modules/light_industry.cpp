@@ -33,7 +33,7 @@ Construction *IndustryLightConstructionGroup::createConstruction(int x, int y ) 
     return new IndustryLight(x, y, this);
 }
 
-void IndustryLight::update()
+void IndustryLight::update(std::any)
 {
     int goods_today = 0;
 
@@ -156,7 +156,7 @@ void IndustryLight::update()
     }// end animate
 }
 
-void IndustryLight::report()
+void IndustryLight::report(std::any)
 {
     int i = 0;
 

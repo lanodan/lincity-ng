@@ -89,8 +89,8 @@ public:
         this->anim = 0;
     }
     virtual ~Shanty() { }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
     int anim;
 };
 

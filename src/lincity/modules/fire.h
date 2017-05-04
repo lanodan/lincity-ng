@@ -55,8 +55,8 @@ public:
         setMemberSaved(&this->days_before_spread, "days_before_spread");
 
     }
-    virtual void update();
-    virtual void report();
+    virtual void update(std::any);
+    virtual void report(std::any);
 
     int burning_days;
     int smoking_days;

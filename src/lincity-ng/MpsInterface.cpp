@@ -116,7 +116,7 @@ void mps_refresh() /* refresh the information display's contents */
             currentMPS = mapMPS;
             if (world(mps_x, mps_y)->reportingConstruction)
             {
-                world(mps_x, mps_y)->reportingConstruction->report();
+                world(mps_x, mps_y)->reportingConstruction->report(nullptr);
             }
             else
                {

@@ -137,6 +137,10 @@ void initPhysfs(const char* argv0)
 
     PHYSFS_freeList(rc);
 
+    if (auto path = std::getenv("LINCITY_BASE"); path != nullptr) {
+        PHYSFS_addToSearchPath(path, 1);
+    }
+
     // when started from source dir...
     std::string dir = PHYSFS_getBaseDir();
     dir += "data";
@@ -265,7 +269,11 @@ void initVideo(int width, int height)
     if(getConfig()->useFullScreen)
         flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 
-    window = SDL_CreateWindow(PACKAGE_NAME " " PACKAGE_VERSION,
+    std::string title;
+    title += PACKAGE_NAME;
+    title += " ";
+    title += PACKAGE_VERSION;
+    window = SDL_CreateWindow(title.c_str(),
                               SDL_WINDOWPOS_UNDEFINED,
                               SDL_WINDOWPOS_UNDEFINED, width, height,
                               flags);

@@ -1,0 +1,46 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  formatting-check:
+    name: Formatting Check
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+    - name: Run clang-format style check for C/C++ programs.
+      uses: jidicula/clang-format-action@v3.2.0
+      with:
+        clang-format-version: '11'
+        check-path: 'src'
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [clang-debug, clang-release]
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+    - name: Install SDL2
+      run: |
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          sudo apt-get install sdl2 sdl2_gfx sdl2_image sdl2_mixer sdl2_ttf
+        elif [ "$RUNNER_OS" == "macOS" ]; then
+          brew install sdl2 sdl2_gfx sdl2_image sdl2_mixer sdl2_ttf
+        else
+          echo "$RUNNER_OS not supported"
+          exit 1
+        fi
+      shell: bash
+    - name: Install Conan
+      run: pip install conan
+    - name: Build
+      uses: lukka/run-cmake@v3
+      with:
+        buildDirectory: '${{ github.workspace }}/build'
+        configurationRegexFilter: '${{ matrix.configuration }}'

@@ -6,11 +6,7 @@
  * @license 	GPL v3 or later
  */
 
-#if defined(_MSC_VER)
-#include "SDL.h"
-#else
-#include "SDL/SDL.h"
-#endif
+#include <SDL.h>
 
 #include <time.h>
 #include <math.h>

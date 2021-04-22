@@ -26,7 +26,7 @@
 #include <ctype.h>
 #include <errno.h>
 
-#include "SDL.h"
+#include <SDL.h>
 
 #include "tinygettext.hpp"
 #include "PhysfsStream/PhysfsStream.hpp"

@@ -1,0 +1,9 @@
+[requires]
+freetype/2.10.4
+libpng/1.6.37
+libxml2/2.9.10
+physfs/3.0.1@bincrafters/stable
+zlib/1.2.11
+
+[generators]
+cmake

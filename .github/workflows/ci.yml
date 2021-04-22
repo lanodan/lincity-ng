@@ -1,0 +1,33 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [clang-debug, clang-release]
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+    - name: Install dependencies
+      run: |
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          sudo apt-get install libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
+          pip install conan
+        elif [ "$RUNNER_OS" == "macOS" ]; then
+          brew install conan sdl2 sdl2_gfx sdl2_image sdl2_mixer sdl2_ttf
+        else
+          echo "$RUNNER_OS not supported"
+          exit 1
+        fi
+      shell: bash
+    - name: Build
+      uses: lukka/run-cmake@v3
+      with:
+        buildDirectory: '${{ github.workspace }}/build'
+        configurationRegexFilter: '${{ matrix.configuration }}'

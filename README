@@ -32,10 +32,9 @@ These are generic instructions, please see the wiki for more specific instructio
 The game depends on some tools and libraries to be present, before
 you can start building it. Here's a list of them:
 
-* normal gnu compiler and additional tools (g++ version 3.2 or later is
-  required at the moment)
+* normal C++ compiler with C++20 standard support
 
-* perforce jam 2.5 or later (used as build tool)
+* CMake 3.20 or later (used as build tool)
   ftp://ftp.perforce.com/pub/jam
 
 * SDL2 2.0.0 or later
@@ -70,17 +69,10 @@ separate *-dev packages. Eg. for physfs you need libphysfs and libphysfs-dev.
 
 To build and install the game use the following commands:
 
-    ./configure 
-    jam
-
-If you want to install the game, run as root:
-    jam install
-
-(If you compile the git version you have to run ./autogen.sh first.)
-
-The configure script also lets you set some more options like the installation
-directory (--prefix argument). You'll get a full list of these if you invoke
-"configure --help".
+    mkdir build
+    cd build
+    cmake .. 
+    make
 
 2.3 Starting the game
 

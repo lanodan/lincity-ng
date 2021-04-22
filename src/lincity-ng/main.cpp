@@ -297,7 +297,11 @@ void initVideo(int width, int height)
         std::cerr << "* Fallback to 800x600.\n";
     }
 
-    SDL_WM_SetCaption(PACKAGE_NAME " " PACKAGE_VERSION, 0);
+    std::string caption;
+    caption += PACKAGE_NAME;
+    caption += " ";
+    caption += PACKAGE_VERSION;
+    SDL_WM_SetCaption(caption.c_str(), 0);
     if(!screen) {
         std::stringstream msg;
         msg << "Couldn't set video mode ("

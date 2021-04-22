@@ -1,0 +1,5 @@
+[requires]
+physfs/3.0.1@bincrafters/stable
+
+[generators]
+cmake

@@ -3,6 +3,7 @@
  * This file is part of lincity.
  * Lincity is copyright (c) I J Peters 1995-1997, (c) Greg Sharp 1997-2001.
  * ---------------------------------------------------------------------- */
+#include <spdlog/spdlog.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -104,9 +105,7 @@ int bulldoze_item(int x, int y)
     if (!world(x, y)->is_visible())
     {
         /* This is considered "improper" input.  Silently ignore. */
-#ifdef DEBUG
-        fprintf(stderr, " try to improperly bulldoze_item CST_USED\n");
-#endif
+        spdlog::error(" try to improperly bulldoze_item CST_USED\n");
         return -1;
     }
 

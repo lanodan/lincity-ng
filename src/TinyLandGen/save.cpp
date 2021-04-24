@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <zlib.h>
+#include <spdlog/spdlog.h>
 
 #include "lctypes.h"
 
@@ -16,7 +17,7 @@ void save_city_2(char *cname)
     
     gzFile ofile = gzopen(cname, "wb");
     if (ofile == NULL) {
-        fprintf(stderr,"error Saving file <%s> -\n ", cname);
+        spdlog::error("error Saving file <{}>", cname);
     }
     /* Now we have upgraded game */
     ldsv_version = WATERWELL_V2;

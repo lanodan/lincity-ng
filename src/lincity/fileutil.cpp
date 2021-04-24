@@ -104,9 +104,6 @@
 # define HAVE_LOCALE_NULL
 #endif
 
-#define DEBUG_PRINTF_TO_FILE 0
-void debug_printf(char *fmt, ...);
-
 /* ---------------------------------------------------------------------- *
  * Private Fn Prototypes
  * ---------------------------------------------------------------------- */

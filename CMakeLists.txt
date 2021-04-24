@@ -230,6 +230,7 @@ target_include_directories(lincity-ng PRIVATE
 target_link_libraries(lincity-ng PRIVATE
   ${LIBXML2_LIBRARIES}
   CONAN_PKG::physfs
+  CONAN_PKG::spdlog
   ${SDL_LIBRARIES}
   ${SDL_GFX_LIBRARIES}
   ${SDL_IMAGE_LIBRARIES}

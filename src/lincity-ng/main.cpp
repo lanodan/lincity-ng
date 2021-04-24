@@ -558,12 +558,7 @@ int main(int argc, char** argv)
 {
     int result = 0;
 
-#ifndef DEBUG //in debug mode we wanna have a backtrace
-    try {
         std::cout << "Starting " << PACKAGE_NAME << " (version " << PACKAGE_VERSION << ")...\n";
-#else
-        std::cout << "Starting " << PACKAGE_NAME << " (version " << PACKAGE_VERSION << ") in Debug Mode...\n";
-#endif
         initPhysfs(argv[0]);
 
         if( getConfig()->language != "autodetect" ){
@@ -574,24 +569,11 @@ int main(int argc, char** argv)
         dictionaryManager->add_directory("locale");
         std::cout << "Language is \"" << dictionaryManager->get_language() << "\".\n";
 
-#ifndef DEBUG
-    } catch(std::exception& e) {
-        std::cerr << "Unexpected exception: " << e.what() << "\n";
-        return 1;
-    } catch(...) {
-        std::cerr << "Unexpected exception.\n";
-        return 1;
-    }
-#endif
     parseCommandLine(argc, argv); // Do not use getConfig() before parseCommandLine for anything command line might change.
 
     fast_time_for_year = getConfig()->quickness;
     fprintf(stderr," fast = %i\n", fast_time_for_year);
 
-// in debug mode we want a backtrace of the exceptions so we don't catch them
-#ifndef DEBUG
-    try {
-#endif
         xmlInitParser ();
         if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
             std::stringstream msg;
@@ -612,15 +594,6 @@ int main(int argc, char** argv)
         mainLoop();
         getConfig()->save();
         destroy_game();
-#ifndef DEBUG
-    } catch(std::exception& e) {
-        std::cerr << "Unexpected exception: " << e.what() << "\n";
-        result = 1;
-    } catch(...) {
-        std::cerr << "Unexpected exception.\n";
-        result = 1;
-    }
-#endif
     delete painter;
     delete fontManager;
     delete texture_manager;

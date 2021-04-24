@@ -35,8 +35,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "gui/TextureManager.hpp"
 #include "gui/PainterSDL/TextureManagerSDL.hpp"
 #include "gui/PainterSDL/PainterSDL.hpp"
-#include "gui/PainterGL/TextureManagerGL.hpp"
-#include "gui/PainterGL/PainterGL.hpp"
 
 #include "main.hpp"
 #include "MainLincity.hpp"
@@ -219,24 +217,6 @@ void musicHalted() {
     //FIXME: options menu song entry doesn't update while song changes.
 }
 
-void videoSizeChanged(int width, int height) {
-    if (getConfig()->useOpenGL) {
-        /* Reset OpenGL state */
-        glDisable(GL_DEPTH_TEST);
-        glDisable(GL_CULL_FACE);
-
-        glClearColor(0, 0, 0, 0);
-        glViewport(0, 0, width, height);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0, width, height, 0, -1, 1);
-
-        glClear(GL_COLOR_BUFFER_BIT);
-    }
-}
 void resizeVideo(int width, int height, bool fullscreen)
 {
     SDL_SetWindowSize(window, width, height);
@@ -253,15 +233,6 @@ void initVideo(int width, int height)
     Uint32 flags = 0;
 
     flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN;
-    if( getConfig()->useOpenGL ){
-        flags |= SDL_WINDOW_OPENGL;
-        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-        SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 1);
-        SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 1);
-        SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 1);
-        //SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 0);
-        //SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-    }
     if(getConfig()->useFullScreen)
         flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 
@@ -269,30 +240,6 @@ void initVideo(int width, int height)
                               SDL_WINDOWPOS_UNDEFINED,
                               SDL_WINDOWPOS_UNDEFINED, width, height,
                               flags);
-    if( getConfig()->useOpenGL ){
-        window_context = SDL_GL_CreateContext(window);
-        SDL_GL_SetSwapInterval(1);
-
-        glDisable(GL_DEPTH_TEST);
-        glDisable(GL_CULL_FACE);
-
-        glClearColor(0, 0, 0, 0);
-        glViewport(0, 0, width, height);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0, width, height, 0, -1, 1);
-
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        painter = new PainterGL(window);
-        std::cout << "\nOpenGL Mode " << width;
-        std::cout << "x" << height << "\n";
-
-        texture_manager = new TextureManagerGL();
-    } else {
         window_renderer = SDL_CreateRenderer(window, -1, 0);
 
         painter = new PainterSDL(window_renderer);
@@ -300,7 +247,6 @@ void initVideo(int width, int height)
         std::cout << "x"<< height <<"\n";
 
         texture_manager = new TextureManagerSDL();
-    }
 
     fontManager = new FontManager();
 }
@@ -380,10 +326,6 @@ void parseCommandLine(int argc, char** argv)
             std::cout << "                               -q 8 is the slowest speed with full animation.\n";
             std::cout << "                               -q 1 is fastest. It may heat your hardware!\n";
             exit(0);
-        } else if(argStr == "-g" || argStr == "--gl") {
-            getConfig()->useOpenGL = true;
-        } else if(argStr == "-s" || argStr == "--sdl") {
-            getConfig()->useOpenGL = false;
         } else if(argStr == "-S" || argStr == "--size") {
             currentArgument++;
             if(currentArgument >= argc) {

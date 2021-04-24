@@ -1009,7 +1009,6 @@ MainMenu::run()
             switch(event.type) {
                 case SDL_WINDOWEVENT:
                     if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
-                        videoSizeChanged(event.window.data1, event.window.data2);
                         currentMenu->resize(event.window.data1, event.window.data2);
                         getConfig()->videoX = event.window.data1;
                         getConfig()->videoY = event.window.data2;

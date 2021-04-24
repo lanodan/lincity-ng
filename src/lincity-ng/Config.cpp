@@ -44,7 +44,6 @@ Config::Config()
     assert(configPtr == 0);
 
     //Default Values
-    useOpenGL = true;  //OpenGL is often way too slow
     useFullScreen = true;
     videoX = 1024;
     videoY = 768;
@@ -133,9 +132,7 @@ void Config::load( const std::string& filename ){
                 {
                     const char* name = (const char*) iter.getName();
                     const char* value = (const char*) iter.getValue();
-                    if( strcmp( name, "useOpenGL" ) == 0 ) {
-                        useOpenGL  = parseBool(value, false);
-                    } else if( strcmp(name, "x" ) == 0 ) {
+                    if( strcmp(name, "x" ) == 0 ) {
                         videoX = parseInt( value, 800, 640 );
                     } else if(strcmp(name, "y") == 0 ) {
                         videoY = parseInt( value, 600, 480 );
@@ -231,8 +228,8 @@ Config::save(){
     OFileStream userconfig( "userconfig.xml" );
     userconfig << "<?xml version=\"1.0\"?>\n";
     userconfig << "<configuration>\n";
-    userconfig << "    <video x=\"" << videoX << "\" y=\"" << videoY << "\" useOpenGL=\""
-        << (useOpenGL?"yes":"no") << "\" fullscreen=\"" << (useFullScreen?"yes":"no")
+    userconfig << "    <video x=\"" << videoX << "\" y=\"" << videoY
+        << "\" fullscreen=\"" << (useFullScreen?"yes":"no")
         << "\" restartOnChangeScreen=\"" << (restartOnChangeScreen?"yes":"no")
         << "\" />\n";
     userconfig << "    <audio soundEnabled=\"" << (soundEnabled?"yes":"no")

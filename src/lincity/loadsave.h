@@ -19,7 +19,6 @@
 #endif
 
 # define LC_SAVE_DIR ".lincity-ng"
-# define LINCITYRC_FILENAME ".lincity-NGrc"
 
 #define RESULTS_FILENAME "results.txt"
 

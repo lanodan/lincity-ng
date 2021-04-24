@@ -135,7 +135,6 @@ char opening_path[LC_PATH_MAX];
 char help_path[LC_PATH_MAX];
 char message_path[LC_PATH_MAX];
 char lc_textdomain_directory[LC_PATH_MAX];
-char lincityrc_file[LC_PATH_MAX];
 
 /* ---------------------------------------------------------------------- *
  * Public Functions
@@ -393,7 +392,6 @@ void init_path_strings(void)
     sprintf(opening_pic, "%s%c%s", opening_path, PATH_SLASH, "open.tga.gz");
 #endif
     sprintf(graphic_path, "%s%c%s%c", LIBDIR, PATH_SLASH, "icons", PATH_SLASH);
-    sprintf(lincityrc_file, "%s%c%s", homedir, PATH_SLASH, LINCITYRC_FILENAME);
 
     /* Paths for message & help files, etc */
     find_localized_paths();

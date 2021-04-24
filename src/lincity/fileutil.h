@@ -38,7 +38,6 @@ extern char opening_path[LC_PATH_MAX];
 extern char help_path[LC_PATH_MAX];
 extern char message_path[LC_PATH_MAX];
 extern char lc_textdomain_directory[LC_PATH_MAX];
-extern char lincityrc_file[LC_PATH_MAX];
 extern char given_scene[LC_PATH_MAX];
 
 //void gunzip_file (char *f1, char *f2); //unused function

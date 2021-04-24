@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "TextureGL.hpp"
 
 #include <SDL_opengl.h>
-
+/*
 TextureGL::TextureGL(GLuint newhandle)
     : handle(newhandle)
 {
@@ -30,7 +30,7 @@ TextureGL::~TextureGL()
     GLuint handles[1] = { handle };
     glDeleteTextures(1, handles);
 }
-
+*/
 
 /** @file gui/PainterGL/TextureGL.cpp */
 

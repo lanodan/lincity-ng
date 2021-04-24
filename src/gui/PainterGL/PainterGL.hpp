@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "gui/TextureManager.hpp"
 #include "gui/Color.hpp"
 #include "gui/Painter.hpp"
-
+/*
 class TextureGL;
 
 class PainterGL : public Painter
@@ -76,7 +76,7 @@ private:
     Color fillColor,lineColor;
 };
 
+*/
 #endif
-
 /** @file gui/PainterGL/PainterGL.hpp */
 

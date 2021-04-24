@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define __TEXTUREMANAGERGL_HPP__
 
 #include "gui/TextureManager.hpp"
-
+/*
 class TextureManagerGL : public TextureManager
 {
 public:
@@ -28,7 +28,7 @@ public:
 
     Texture* create(SDL_Surface* surface);
 };
-
+*/
 #endif
 
 

@@ -28,7 +28,6 @@ public:
     Config();
     ~Config();
 
-    bool useOpenGL;
     bool useFullScreen;
     bool restartOnChangeScreen;
     int videoX, videoY;

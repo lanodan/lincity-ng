@@ -602,11 +602,7 @@ void MainMenu::changeResolution(bool next) {
     if(modes == NULL) {
         Uint32 flags = 0;
 
-        if(getConfig()->useOpenGL){
-            flags = SDL_OPENGL;
-        } else {
             flags = SDL_HWSURFACE;
-        }
         flags |= SDL_FULLSCREEN;    // only check for fullscreen modes to get useful results from  SDL_ListModes
         modes = SDL_ListModes(NULL,  flags);
 

@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <typeinfo>
 
 #include "TextureGL.hpp"
-
+/*
 PainterGL::PainterGL()
 {
     glEnable(GL_TEXTURE_2D);
@@ -225,7 +225,7 @@ PainterGL::createTexturePainter(Texture* texture)
     // TODO
     return 0;
 }
-
+*/
 
 /** @file gui/PainterGL/PainterGL.cpp */
 

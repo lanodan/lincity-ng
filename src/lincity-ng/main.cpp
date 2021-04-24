@@ -271,17 +271,7 @@ void initVideo(int width, int height)
 
 #endif
 
-    if( getConfig()->useOpenGL ){
-        flags = SDL_OPENGL | SDL_RESIZABLE;
-        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-        SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 1);
-        SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 1);
-        SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 1);
-        //SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 0);
-        //SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-    } else {
-        flags = SDL_HWSURFACE | SDL_RESIZABLE | SDL_DOUBLEBUF;
-    }
+    flags = SDL_HWSURFACE | SDL_RESIZABLE | SDL_DOUBLEBUF;
     if(getConfig()->useFullScreen)
         flags |= SDL_FULLSCREEN;
 
@@ -308,12 +298,6 @@ void initVideo(int width, int height)
             << width << "x" << height
             << "-" << bpp << "bpp) : " << SDL_GetError() << std::endl;
 
-        if(getConfig()->useOpenGL) {
-            std::cerr << "* Fallback to SDL mode.\n";
-            getConfig()->useOpenGL = false;
-            initVideo(getConfig()->videoX, getConfig()->videoY); //width, height
-            return;
-        }
         throw std::runtime_error(msg.str());
     }
 
@@ -323,36 +307,12 @@ void initVideo(int width, int height)
         painter = 0;
     }
     VideoInfo = SDL_GetVideoInfo();
-    if( getConfig()->useOpenGL ){
-        glDisable(GL_DEPTH_TEST);
-        glDisable(GL_CULL_FACE);
-
-        glClearColor(0, 0, 0, 0);
-        glViewport(0, 0, screen->w, screen->h);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0, screen->w, screen->h, 0, -1, 1);
-
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        painter = new PainterGL();
-        std::cout << "\nOpenGL Mode " << VideoInfo->current_w;
-        std::cout << "x" << VideoInfo->current_h << "\n";
-    } else {
         painter = new PainterSDL(screen);
         std::cout << "\nSDL Mode " << VideoInfo->current_w;
         std::cout << "x"<< VideoInfo->current_h <<"\n";
-    }
 
     if(texture_manager == 0) {
-        if( getConfig()->useOpenGL ) {
-            texture_manager = new TextureManagerGL();
-        } else {
             texture_manager = new TextureManagerSDL();
-        }
     }
 
     if(fontManager == 0) {
@@ -416,13 +376,7 @@ void checkGlErrors()
 
 void flipScreenBuffer()
 {
-    if( getConfig()->useOpenGL ){
-        checkGlErrors();
-        SDL_GL_SwapBuffers();
-        //glClear(GL_COLOR_BUFFER_BIT);
-    } else {
         SDL_Flip(SDL_GetVideoSurface());
-    }
 }
 
 void mainLoop()
@@ -500,10 +454,6 @@ void parseCommandLine(int argc, char** argv)
             std::cout << "                               -q 8 is the slowest speed with full animation.\n";
             std::cout << "                               -q 1 is fastest. It may heat your hardware!\n";
             exit(0);
-        } else if(argStr == "-g" || argStr == "--gl") {
-            getConfig()->useOpenGL = true;
-        } else if(argStr == "-s" || argStr == "--sdl") {
-            getConfig()->useOpenGL = false;
         } else if(argStr == "-S" || argStr == "--size") {
             currentArgument++;
             if(currentArgument >= argc) {
